@@ -5,9 +5,9 @@
 body {
     background-color: #0753af;
     font-family: Arial, sans-serif;
-    /* Font color */
     margin: 0;
     padding: 0;
+    color: white;
 }
 
 header,
@@ -47,6 +47,7 @@ img {
 
 .italic {
     font-style: italic;
+    color: white;
 }
 
 .worst_stat {
@@ -69,4 +70,26 @@ img {
     background-color: #0753af;
     color: white;
     font-style: italic;
+}
+
+.subheader a {
+    color: white;
+    font-weight: bolder;
+    font-size: 20px;
+    text-decoration: none;
+    transition: color 0.3s;
+    margin: 0 10px;
+}
+
+.subheader a:hover {
+    color: lightgrey;
+}
+
+.subheader a:visited {
+    color: grey;
+}
+
+a {
+    color: white;
+    text-decoration: none;
 }
