@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Learning More About the Living Prophets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fb;
+            color: #263645;
+        }
+
+        header {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        nav {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #0077c0;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .prophet-img {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #e6edf6;
+            display: block;
+            margin: 12px auto;
+        }
+
+        select,
+        button {
+            padding: 10px 14px;
+            font-size: 15px;
+            border-radius: 8px;
+            border: 1px solid #d0d8e0;
+            margin: 6px;
+        }
+
+        #output {
+            margin-top: 18px;
+            text-align: center;
+        }
+
+        .bio {
+            max-width: 760px;
+            margin: 12px auto;
+            line-height: 1.5;
+        }
+
+        .talk-link {
+            display: block;
+            margin-top: 12px;
+            color: #0077c0;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>LEARNING MORE ABOUT THE LIVING PROPHETS</header>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="about.html">About Me</a> |
+        <a href="scratch.html">Scratch Page</a>
+    </nav>
+
+    <div style="text-align:center; margin: 20px;">
+        <select id="prophetSelect">
+            <option value="">-- Choose a leader --</option>
+        </select>
+        <button id="generateBtn">Generate</button>
+        <button id="surpriseBtn">Surprise me</button>
+    </div>
+
+    <div id="output"></div>
+
+    <script>
+        const leaders = [
+            {
+                id: "dallin_h_oaks",
+                name: "President Dallin H. Oaks",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/President_Dallin_H._Oaks.jpg/250px-President_Dallin_H._Oaks.jpg",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/dallin-h-oaks?lang=eng",
+                bio: "Dallin H. Oaks has devoted his life to strengthening faith, defending religious freedom, and teaching the doctrines of Jesus Christ with clarity and conviction. Before becoming President of the Church, he served as a justice of the Utah Supreme Court and as president of Brigham Young University, earning respect for his analytical mind and steady leadership.\n\nAs a Church leader, President Oaks emphasizes the central role of Jesus Christ in healing hearts and unifying God’s children. He invites members to act with integrity and compassion, points toward revelation in life, and encourages Christlike growth in all things."
+            },
+            {
+                id: "henry_b_eyring",
+                name: "President Henry B. Eyring",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Henry_B._Eyring.jpg/250px-President_Henry_B._Eyring.jpg",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/henry-b-eyring?lang=eng",
+                bio: "Henry B. Eyring is known for his gentle heart, humility, and unwavering faith. Before his Church service, he was an educator and administrator, serving as president of Ricks College and Commissioner of Church Education.\n\nPresident Eyring emphasizes personal revelation, the reality of divine guidance, and the Savior’s love in helping members navigate life. He encourages disciples to look for spiritual impressions and strengthen others through service and kindness."
+            },
+            {
+                id: "d_todd_christofferson",
+                name: "President D. Todd Christofferson",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/D._Todd_Christofferson_%2826735635918%29.jpg/250px-D._Todd_Christofferson_%2826735635918%29.jpg",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/d-todd-christofferson?lang=eng",
+                bio: "D. Todd Christofferson emphasizes personal integrity, accountability, and faith in Jesus Christ. Before full-time Church service, he was an attorney and held prominent legal positions.\n\nHe teaches about moral discipline, repentance, and the stabilizing power of living according to divine law. He encourages members to develop spiritual resilience and seek personal revelation through diligent effort."
+            },
+            {
+                id: "jeffrey_r_holland",
+                name: "Elder Jeffrey R. Holland",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Elder_Jeffrey_R._Holland.jpg/250px-Elder_Jeffrey_R._Holland.jpghttps://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Jeffrey_R._Holland_2018.jpg/250px-Jeffrey_R._Holland_2018.jpg",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/jeffrey-r-holland?lang=eng",
+                bio: "Jeffrey R. Holland is widely admired for warmth, compassion, and powerful testimony of Jesus Christ. His teachings invite listeners to draw nearer to the Savior.\n\nHe speaks about hope, healing, and the redeeming power of Christ’s Atonement. He reassures listeners that no one is beyond the reach of divine help and that the Savior walks with His disciples through every trial."
+            },
+            {
+                id: "dieter_f_uchtdorf",
+                name: "Elder Dieter F. Uchtdorf",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Dieter_F._Uchtdorf3.jpg/250px-Dieter_F._Uchtdorf3.jpg",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/dieter-f-uchtdorf?lang=eng",
+                bio: "Dieter F. Uchtdorf, a former airline pilot, is known for optimism, kindness, and uplifting messages. His teachings inspire hope and gratitude.\n\nHe encourages disciples to embrace joy, cultivate charity, and press forward with hope in Christ. He reminds members that the gospel brings light even during turbulent times."
+            },
+            {
+                id: "david_a_bednar",
+                name: "Elder David A. Bednar",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Elder_David_A._Bednar.png/250px-Elder_David_A._Bednar.png",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/david-a-bednar?lang=eng",
+                bio: "David A. Bednar is known for doctrinal teaching and emphasis on conversion to Christ. He highlights small consistent acts of faith.\n\nHe teaches about the enabling power of Christ’s Atonement, the importance of agency, and spiritual protection through obedience. He encourages steady, purposeful growth in discipleship."
+            },
+            {
+                id: "quentin_l_cook",
+                name: "Elder Quentin L. Cook",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Elder_Quentin_L._Cook.png/250px-Elder_Quentin_L._Cook.png",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/quentin-l-cook?lang=eng",
+                bio: "Quentin L. Cook brings a background in law, business, and community leadership to his ministry. He is calm, thoughtful, and encourages faith, family, and covenant belonging.\n\nHe teaches the importance of family, covenant belonging, and peace that comes from following Christ. His counsel offers reassurance in navigating modern challenges."
+            },
+            {
+                id: "neil_l_andersen",
+                name: "Elder Neil L. Andersen",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Elder_Neil_L._Andersen_%2841220662734%29.jpg/250px-Elder_Neil_L._Andersen_%2841220662734%29.jpg",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/neil-l-andersen?lang=eng",
+                bio: "Neil L. Andersen is humble, gentle, and strongly testifies of Jesus Christ. He emphasizes spiritual preparation and trust in the Lord.\n\nHe teaches about remaining faithful through life’s uncertainties, remembering spiritual experiences, and strengthening families. His messages encourage steadfastness and courage in faith."
+            },
+            {
+                id: "ronald_a_rasband",
+                name: "Elder Ronald A. Rasband",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Elder_Ronald_A._Rasband.jpg/250px-Elder_Ronald_A._Rasband.jpg",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/ronald-a-rasband?lang=eng",
+                bio: "Ronald A. Rasband is compassionate and desires to minister to individuals. He emphasizes following spiritual promptings and trusting God’s timing.\n\nHe teaches gratitude, service, and the guiding influence of the Holy Ghost. He encourages acting quickly on promptings and strengthening those around us."
+            },
+            {
+                id: "gary_e_stevenson",
+                name: "Elder Gary E. Stevenson",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Elder_Gary_E._Stevenson.jpg/250px-Elder_Gary_E._Stevenson.jpg",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/gary-e-stevenson?lang=eng",
+                bio: "Gary E. Stevenson has a background in business and Church leadership. He emphasizes simplicity, focus on what matters, and spiritual steadiness.\n\nHe teaches members to strengthen homes, practice daily faith habits, and live intentionally centered on Christ. His messages encourage joy, gratitude, and consistent discipleship."
+            },
+            {
+                id: "dale_g_renlund",
+                name: "Elder Dale G. Renlund",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Elder_Dale_G._Renlund.jpg/250px-Elder_Dale_G._Renlund.jpg",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/dale-g-renlund?lang=eng",
+                bio: "Dale G. Renlund, a former cardiologist, blends scientific insight with spiritual conviction. He emphasizes the power of Christ’s Atonement and mercy, patience, and grace.\n\nHe teaches discipleship as a journey of growth and reliance on the Savior. He encourages humility, trust in God’s love, and persistent effort in spiritual progress."
+            },
+            {
+                id: "gerrit_w_gong",
+                name: "Elder Gerrit W. Gong",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Gerrit_gong_official_portrait.jpg/250px-Gerrit_gong_official_portrait.jpg",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/gerrit-w-gong?lang=eng",
+                bio: "Gerrit W. Gong uses poetic language and emphasizes belonging within the gospel community. He encourages compassion, unity, and spiritual growth across cultures.\n\nHe teaches members to embrace differences, strengthen relationships, and grow spiritually through reflection and service."
+            },
+            {
+                id: "ulisses_soares",
+                name: "Elder Ulisses Soares",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Elder_Ulisses_Soares_%2846802114135%29.jpg/250px-Elder_Ulisses_Soares_%2846802114135%29.jpg",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/ulisses-soares?lang=eng",
+                bio: "Ulisses Soares emphasizes service, unity, and the global nature of the Church. He focuses on charity, inclusion, and strengthening families worldwide.\n\nHe teaches members to serve sincerely, strengthen families, and deepen their relationship with Christ while contributing positively to their communities."
+            },
+            {
+                id: "patrick_kearon",
+                name: "Elder Patrick Kearon",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Elder_Patrick_Kearon.jpg/250px-Elder_Patrick_Kearon.jpg",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/patrick-kearon?lang=eng",
+                bio: "Patrick Kearon brings experience from global Church assignments and focuses on hope, healing, discipleship, and applying gospel principles to modern challenges.\n\nHe encourages members to seek guidance, embrace acts of service, and rely on the Savior’s Atonement for strength. His teachings highlight faith, resilience, and humility."
+            },
+            {
+                id: "gerald_causse",
+                name: "Elder Gérald Caussé",
+                imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/G%C3%A9rald_Causs%C3%A9.jpg/250px-G%C3%A9rald_Causs%C3%A9.jpg",
+                talksUrl: "https://www.churchofjesuschrist.org/study/general-conference/speakers/gerald-causse?lang=eng",
+                bio: "Gérald Caussé serves as Presiding Bishop overseeing temporal affairs and teaches the importance of service, stewardship, and gratitude. He previously worked in finance and administration, aiding Church humanitarian and welfare programs.\n\nHe encourages members to recognize God’s hand, cultivate hearts of service, and understand that spiritual and temporal well-being are connected. His counsel inspires faithful stewardship, gratitude, and following Christ’s example."
+            }
+        ];
+
+        const select = document.getElementById('prophetSelect');
+        const output = document.getElementById('output');
+        const generateBtn = document.getElementById('generateBtn');
+        const surpriseBtn = document.getElementById('surpriseBtn');
+
+        function populateSelect() {
+            leaders.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.id;
+                opt.textContent = p.name;
+                select.appendChild(opt);
+            });
+        }
+
+        function renderLeader(leader) {
+            output.innerHTML = "";
+
+            const title = document.createElement('h2');
+            title.textContent = leader.name;
+            output.appendChild(title);
+
+            const img = document.createElement('img');
+            img.className = 'prophet-img';
+            img.alt = leader.name + " photo";
+            img.src = leader.imageUrl;
+            output.appendChild(img);
+
+            const p = document.createElement('p');
+            p.className = 'bio';
+            p.textContent = leader.bio;
+            output.appendChild(p);
+
+            const talkLink = document.createElement('a');
+            talkLink.className = 'talk-link';
+            talkLink.href = leader.talksUrl;
+            talkLink.target = '_blank';
+            talkLink.rel = 'noopener noreferrer';
+            talkLink.textContent = 'View General Conference Talks';
+            output.appendChild(talkLink);
+        }
+
+        generateBtn.addEventListener('click', () => {
+            const sel = select.value;
+            if (!sel) {
+                output.innerHTML = "<p>Please choose a leader or press Surprise me.</p>";
+                return;
+            }
+            const leader = leaders.find(l => l.id === sel);
+            if (leader) renderLeader(leader);
+        });
+
+        surpriseBtn.addEventListener('click', () => {
+            const idx = Math.floor(Math.random() * leaders.length);
+            select.value = leaders[idx].id;
+            renderLeader(leaders[idx]);
+        });
+
+        populateSelect();
+    </script>
+</body>
+
+</html>

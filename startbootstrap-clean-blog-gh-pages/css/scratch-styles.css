@@ -1,0 +1,72 @@
+/* Levi Peterson
+ IS 201 - Section 001 with Randy Britsch
+ Final Project! :) */
+
+body {
+    background-color: #0753af;
+    font-family: Arial, sans-serif;
+    /* Font color */
+    margin: 0;
+    padding: 0;
+}
+
+header,
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: #002654;
+}
+
+.text {
+    padding: 2rem;
+    margin: 1rem auto;
+    width: 90%;
+    max-width: 1000px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    background-color: #0753af;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+.white {
+    color: antiquewhite;
+}
+
+.section {
+    color: blanchedalmond;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.worst_stat {
+    color: #FF4C4C;
+    font-weight: bold;
+}
+
+.best_stat {
+    color: goldenrod;
+    font-weight: bold;
+}
+
+.footer_text {
+    padding: 2rem;
+    margin: 1rem auto;
+    width: 90%;
+    max-width: 1000px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    background-color: #0753af;
+    color: white;
+    font-style: italic;
+}
